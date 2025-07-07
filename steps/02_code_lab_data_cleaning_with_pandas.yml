@@ -1,0 +1,66 @@
+id: code_lab_data_cleaning_with_pandas
+learningObjectives:
+  - Master data cleaning techniques using pandas
+hints:
+  - "Remember from Chapter 2: Data preparation is crucial - garbage in, garbage out!"
+  - "For missing values, use median imputation: df_cleaned['total_bedrooms'].fillna(df_cleaned['total_bedrooms'].median(), inplace=True)"
+  - "For categorical encoding, use one-hot encoding: df_final = pd.get_dummies(df_cleaned, columns=['ocean_proximity'])"
+  - "Pro tip: Always verify your results - check that no missing values remain and all columns are numeric"
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: "Now it's time to roll up our sleeves and get our hands dirty with real data cleaning!"
+          - text: |
+              In Chapter 2 of our ML book, we learned that raw data is rarely clean enough for machine learning. Real datasets have missing values, inconsistent formats, and categorical text that algorithms can't understand.
+
+              Why this matters: Before any machine learning model can work, we need clean, numeric data. This is often 80% of a data scientist's job!
+          - text: |
+              We have a California housing dataset with typical real-world problems that are blocking our ML pipeline:
+
+              - Missing bedroom counts - Some houses are missing `total_bedrooms` data
+              - Text categories - The `ocean_proximity` column has text like 'NEAR BAY' that ML algorithms can't process
+          - text: |
+              **Your goal:** Transform this messy data into a clean dataset ready for machine learning using pandas.
+
+              What you'll do:
+              1. Fill missing values - Use the median bedroom count for missing entries
+              2. Convert text to numbers - Turn location categories into numeric columns
+
+              Files provided:
+              - `data_cleaning.ipynb` - Your workspace with guided steps and automatic validation
+              - `housing_data.csv` - The messy housing dataset
+
+              :instruction[Complete the notebook and run the final validation cell to automatically check your work!]
+
+trigger:
+  type: user_event
+  params:
+    event: data_cleaning_complete
+  flowNode:
+    if:
+      conditions:
+        - conditionId: text_contains_strings
+          params:
+            text: "${eventMetadata.message}"
+            strings: ["CONGRATULATIONS"]
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: "🎉 Excellent work! Your data cleaning validation passed!"
+                - text: "You've successfully handled missing values and converted categorical data to numeric format - essential skills for any ML pipeline!"
+          - actionId: finish_step
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: "I received your validation results:"
+                - text: "${eventMetadata.message}"
+                - text: "Please complete the remaining steps in your notebook and run the validation cell again!"

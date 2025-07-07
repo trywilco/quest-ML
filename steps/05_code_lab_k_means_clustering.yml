@@ -1,0 +1,101 @@
+id: code_lab_k_means_clustering
+learningObjectives:
+  - Implement and understand K-Means clustering using Scikit-Learn.
+hints:
+  - |
+    # Basic K-Means implementation
+    kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
+    cluster_labels = kmeans.fit_predict(X)
+  - Review the [K-Means Clustering Documentation](https://scikit-learn.org/stable/modules/clustering.html#k-means) to aid in implementation.
+  - Study Chapter 8 - Dimensionality Reduction for understanding K-Means clustering concepts and visualization techniques.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: "Time to dive into the fascinating world of unsupervised learning with K-Means clustering!"
+          - text: |
+              In Chapter 8 of our ML book, we explored how K-Means works - an algorithm that finds hidden patterns in data by grouping similar items together.
+
+              Why this matters: K-Means is one of the most popular clustering algorithms used in customer segmentation, image processing, and data analysis across industries!
+          - text: |
+              We have a customer dataset with purchasing behavior that businesses use to understand their customers better:
+
+              - **Annual Income** - How much customers earn yearly
+              - **Spending Score** - How much customers spend (1-100 scale)
+          - text: |
+              **Your mission:** Use K-Means to segment customers into groups for targeted marketing!
+
+              In this exercise, you'll answer two key questions:
+              1. What is the optimal number of clusters? (using the elbow method)
+              2. How many customers are in each cluster? (using K-Means clustering)
+          - text: |
+              Files provided:
+              - `kmeans_clustering.ipynb` - Your workspace with guided analysis
+              - `customer_data.csv` - Customer behavior dataset
+
+              :instruction[Complete the notebook analysis and answer the questions above when ready!]
+trigger:
+  type: user_message
+  params:
+    person: lucca
+  flowNode:
+    do:
+      - actionId: parse_user_response
+        name: user_clustering_answer
+        params:
+          prompt: |
+            Please evaluate the user's answer about K-Means clustering results. I expect them to identify:
+
+            **Question 1 - Optimal number of clusters:**
+            - The optimal number of clusters is 5 (based on the elbow method)
+
+            **Question 2 - Cluster sizes:**
+            - Cluster 0: 42 customers (21.0%)
+            - Cluster 1: 57 customers (28.5%)
+            - Cluster 2: 20 customers (10.0%)
+            - Cluster 3: 49 customers (24.5%)
+            - Cluster 4: 32 customers (16.0%)
+
+            # Assessment Criteria
+            - Check if they identify the optimal number of clusters as 5
+            - Look for cluster size information (they should mention the distribution of customers across clusters)
+            - Accept reasonable variations in numbers (±2 customers per cluster is acceptable due to different random states)
+            - They should show understanding of both the elbow method and cluster analysis
+
+            # Response Guidelines:
+            - If the user's answer is correct or shows sufficient understanding, return 'correct: true'
+              - Congratulate them on successfully completing the K-Means clustering analysis
+              - Acknowledge their understanding of both the elbow method and cluster interpretation
+            - If the user's answer is incorrect or incomplete, return 'correct: false'
+              - Gently guide them to look more carefully at their elbow curve and cluster results
+              - Encourage them to re-examine their notebook output
+
+            # Tone and Style:
+            - Use friendly and encouraging language
+            - Be empathetic to the user's learning process
+            - Focus on helping them understand clustering concepts
+          schema:
+            correct: boolean
+            reply: string
+    if:
+      conditions:
+        - conditionId: is_truthy
+          params:
+            value: ${outputs.user_clustering_answer.value.correct}
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_clustering_answer.value.reply}
+          - actionId: finish_step
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_clustering_answer.value.reply}

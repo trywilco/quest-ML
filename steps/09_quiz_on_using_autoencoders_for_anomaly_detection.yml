@@ -1,0 +1,73 @@
+id: quiz_on_using_autoencoders_for_anomaly_detection
+learningObjectives:
+  - Understand the primary use of autoencoders in anomaly detection.
+hints:
+  - Think about how autoencoders can differentiate between normal and abnormal data.
+  - Review Chapter 17 - Autoencoders and Applications to understand how autoencoders are used for detecting anomalies in datasets.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              As we near the end of our quest, let's explore one of the most intriguing neural network architectures - autoencoders!
+
+              These clever networks, detailed in Chapter 17, have a special talent for learning data patterns and spotting when something doesn't fit.
+          - text: ":instruction[In the context of autoencoders, what does the term 'sparsity' refer to?]"
+    - actionId: quiz_message
+      name: quiz
+      params:
+        person: lucca
+        options:
+          - The number of active neurons in the coding layer
+          - The constraint that leads to good feature extraction by reducing the number of active neurons in the coding layer
+          - The process of adding noise to the inputs of the autoencoder
+          - The technique of tying the weights of the decoder layers to the weights of the encoder layers
+trigger:
+  type: chat_form_submitted
+  flowNode:
+    switch:
+      key: ${formSubmission}
+      cases:
+        A:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: Close, but not quite complete! While sparsity does involve the number of active neurons, this answer doesn't capture the full concept. Think about the purpose behind controlling these neurons!
+            - actionId: replay_action
+              params:
+                actionName: quiz
+        B:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: |
+                      Excellent! You've mastered it!
+
+                      Sparsity refers to the constraint that pushes the autoencoder to reduce the number of active neurons in the coding layer, leading to better feature extraction. 
+
+                      This is crucial for anomaly detection because it forces the autoencoder to learn the most important patterns in normal data!
+            - actionId: finish_step
+        C:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: Not quite! Adding noise to inputs is actually a technique used in denoising autoencoders, not the definition of sparsity. Try again!
+            - actionId: replay_action
+              params:
+                actionName: quiz
+        D:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: That's not correct! Tying weights is a technique used in training stacked autoencoders, not what sparsity refers to. Give it another try!
+            - actionId: finish_step

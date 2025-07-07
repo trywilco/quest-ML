@@ -1,0 +1,89 @@
+id: code_lab_custom_object_detection_with_tensorflow
+learningObjectives:
+  - Apply pre-trained object detection models using TensorFlow
+hints:
+  - |
+    To prepare the image for detection use:
+    input_tensor = tf.convert_to_tensor(image_np)
+    input_tensor = input_tensor[tf.newaxis, ...]  # Add batch dimension
+    detections = detector(input_tensor)
+  - Reference Chapter 14 - Deep Computer Vision Using CNNs for understanding object detection concepts and CNN architectures.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              Remember Chapter 14 where we explored CNNs and computer vision? Now let's see them in action with object detection!
+
+              You'll work with a state-of-the-art SSD MobileNet model - the same type powering self-driving cars and security systems.
+          - text: |
+              :instruction[Can you analyze the busy `street_scene.jpg` and tell me:]
+
+              - How many cars does the model spot in that urban chaos?
+              - How many people are wandering around?
+              - What's the total count of all objects the AI detected?
+          - text: "Fire up the `object_detection_analysis.ipynb` notebook and let's see what this neural network can find!"
+trigger:
+  type: user_message
+  params:
+    person: lucca
+  flowNode:
+    do:
+      - actionId: parse_user_response
+        name: user_detection_answer
+        params:
+          prompt: |
+            Please evaluate the user's answer about street scene object detection results. I expect them to identify:
+
+            **Question 1 - Cars in street scene:**
+            - Number of cars detected in street_scene.jpg: approximately 6-8 cars
+
+            **Question 2 - People in street scene:**
+            - Number of people detected in street_scene.jpg: approximately 3-5 people
+
+            **Question 3 - Total objects in street scene:**
+            - Total objects detected in street_scene.jpg: approximately 20-28 objects
+
+            # Assessment Criteria
+            - Check if they identify roughly 6-8 cars in the street scene (±2 is acceptable)
+            - Look for 3-5 people detected (±1 is acceptable due to confidence thresholds)
+            - They should report 20-28 total objects in the complex street scene
+            - Accept reasonable variations due to different confidence thresholds (0.5 vs 0.6)
+
+            # Response Guidelines:
+            - If the user's answer is correct or shows sufficient understanding, return 'correct: true'
+              - Congratulate them on successfully analyzing the complex street scene
+              - Acknowledge their understanding of object detection in urban environments
+            - If the user's answer is incorrect or incomplete, return 'correct: false'
+              - Gently guide them to focus specifically on the street_scene.jpg image
+              - Encourage them to re-examine their code for counting objects by class
+
+            # Tone and Style:
+            - Use friendly and encouraging language
+            - Be empathetic to the user's learning process
+            - Focus on helping them understand complex scene analysis
+          schema:
+            correct: boolean
+            reply: string
+    if:
+      conditions:
+        - conditionId: is_truthy
+          params:
+            value: ${outputs.user_detection_answer.value.correct}
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_detection_answer.value.reply}
+          - actionId: finish_step
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_detection_answer.value.reply}

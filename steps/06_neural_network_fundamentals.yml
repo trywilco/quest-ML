@@ -1,0 +1,74 @@
+id: neural_network_fundamentals
+learningObjectives:
+  - Understand the main components of a neural network and their functions.
+hints:
+  - Check out a [Comprehensive Guide on Neural Networks](https://www.ibm.com/cloud/learn/neural-networks) for more
+    information.
+  - Explore Chapter 10 - Introduction to Artificial Neural Networks to understand the basic architecture and layer types.
+  - Look at the "The Perceptron" section in Chapter 10 to see how data flows through different layers.
+  - Think about how data enters the network, gets processed, and produces an output - each stage corresponds to a different layer type.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              We've journeyed through the fundamentals of machine learning, and now we're venturing into one of its most powerful frontiers - neural networks!
+          - text: |
+              Just as our quest has built understanding layer by layer, neural networks themselves are built from interconnected layers of artificial neurons.
+
+              In Chapter 10, we learn that neural networks are organized in a specific structure with different types of layers, each serving a unique purpose in processing data.
+          - text: ":instruction[Can you name the three types of layers that make up a basic neural network architecture?]"
+trigger:
+  type: user_message
+  params:
+    person: lucca
+  flowNode:
+    do:
+      - actionId: parse_user_response
+        name: user_answer
+        params:
+          prompt: |
+            Please evaluate the user's answer in relation to the expected answer: I expect the user to name the three types of layers in a basic neural network: input layer, hidden layer(s), and output layer.
+
+            # Assessment Criteria
+            - Check if they mention the three types of layers: input, hidden, and output layers
+            - Consider synonyms, paraphrasing, and different phrasing that convey the same meaning (e.g., 'hidden layers' vs 'intermediate layers')
+            - Be flexible and focus on the essence of the answer rather than exact wording
+            - They should identify at least 2 of the 3 layer types to show understanding
+
+            # Response Guidelines:
+            - If the user's answer is correct or shows sufficient understanding, return 'correct: true'
+              - Provide a positive and affirming message, congratulating them and reinforcing their understanding
+            - If the user's answer is incorrect or incomplete, return 'correct: false'
+              - Gently explain why the answer is not fully correct or what may be missing
+              - Encourage them to try again, being empathetic and supportive
+
+            # Tone and Style:
+            - Use friendly and encouraging language
+            - Be empathetic to the user's learning process
+            - Focus on helping the user learn and understand the material
+          schema:
+            correct: boolean
+            reply: string
+    if:
+      conditions:
+        - conditionId: is_truthy
+          params:
+            value: ${outputs.user_answer.value.correct}
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_answer.value.reply}
+          - actionId: finish_step
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_answer.value.reply}

@@ -1,0 +1,28 @@
+id: scaling_and_deploying_models
+learningObjectives:
+  - Learn about scaling and deploying machine learning models.
+hints:
+  - Study Chapter 19 - Deploying TensorFlow Models to understand strategies for deploying models and managing large datasets.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              Time to learn about scaling and deploying models - a critical skill that separates experimental work from production-ready ML systems.
+          - text: |
+              Deployment is where many ML projects fail. A model that works in your notebook but can't handle real users, latency requirements, or scale isn't providing any business value.
+          - text: |
+              Chapter 19 covers TensorFlow Serving, cloud deployment strategies, model versioning, and monitoring. 
+
+              Pay special attention to latency optimization, handling model updates without downtime, and setting up proper monitoring to catch performance issues early.
+          - text: ":instruction[With deployment knowledge under your belt, you'll be ready to wrap up this ML journey and reflect on everything you've learned.]"
+    - actionId: ready_message
+      params:
+        person: lucca
+trigger:
+  type: user_ready_response
+  flowNode:
+    do:
+      - actionId: finish_step

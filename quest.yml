@@ -1,0 +1,38 @@
+id: machine-learning-adventure
+title: Hands-On Machine Learning Adventure
+subtitle: Ready to become a machine learning maestro?
+description: Ready to become a machine learning maestro? This quest will guide
+  you through the hands-on experience of using Scikit-Learn, Keras, and
+  TensorFlow, inspired by the popular book "Hands-On Machine Learning with
+  Scikit-Learn, Keras, and TensorFlow." You'll start with the basics of machine
+  learning and gradually dive into practical applications like data cleaning
+  with Pandas, model tuning, and implementing neural networks. Get ready for
+  some engaging code labs where you'll get your hands dirty with clustering and
+  object detection. By the end of this journey, you'll have a solid
+  understanding of machine learning concepts and the skills to build, tune, and
+  deploy your own models, setting the stage for advanced learning in the field.
+  Let's embark on this exciting learning adventure!
+level: intermediate
+duration: 1
+skills:
+  - Machine Learning
+  - Data Cleaning
+  - Model Tuning
+  - Neural Networks
+  - Python Programming
+steps:
+  - select_framework
+  - introduction_to_machine_learning
+  - codespace_start
+  - code_lab_data_cleaning_with_pandas
+  - basic_concepts_of_scikit_learn
+  - tools_and_tricks_for_tuning_models
+  - code_lab_k_means_clustering
+  - neural_network_fundamentals
+  - code_lab_custom_object_detection_with_tensorflow
+  - reinforcement_learning_basics
+  - quiz_on_using_autoencoders_for_anomaly_detection
+  - scaling_and_deploying_models
+  - quest_completion_and_reflection
+type: MODULE
+repository: https://github.com/trywilco/empty-starter-python

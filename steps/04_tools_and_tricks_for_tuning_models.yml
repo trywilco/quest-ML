@@ -1,0 +1,80 @@
+id: tools_and_tricks_for_tuning_models
+learningObjectives:
+  - Identify methods used for hyperparameter tuning in Scikit-Learn.
+hints:
+  - Think about automated tools that systematically search through hyperparameter combinations.
+  - Review Chapter 5 "Support Vector Machines" - particularly the sections on hyperparameter tuning with C, gamma, and kernel parameters for SVMs.
+  - "Consider what makes hyperparameter tuning efficient: automation and cross-validation combined."
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              Great work mastering Scikit-Learn's core concepts! 
+
+              Now that you understand estimators, predictors, transformers, and pipelines, let's explore how to optimize them.
+          - text: |
+              Once you have a working model, the next crucial step is **hyperparameter tuning** - finding the best configuration to maximize your model's performance.
+
+              As covered in Chapter 5 on Support Vector Machines, hyperparameters like `C` control the balance between margin maximization and classification accuracy.
+          - text: ":instruction[What is the effect of reducing the regularization hyperparameter C in support vector machines (SVMs)?]"
+    - actionId: quiz_message
+      name: quiz
+      params:
+        person: lucca
+        options:
+          - It makes the street smaller and leads to fewer margin violations
+          - It makes the street larger and leads to more margin violations
+          - It makes the street smaller and leads to more margin violations
+          - It makes the street larger and leads to fewer margin violations
+trigger:
+  type: chat_form_submitted
+  flowNode:
+    switch:
+      key: ${formSubmission}
+      cases:
+        A:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: "Not quite! Reducing C actually has the opposite effect - it makes the street larger, not smaller. Think about how lower regularization affects the model's flexibility."
+            - actionId: replay_action
+              params:
+                actionName: quiz
+        B:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: |
+                      Excellent! 
+
+                      As explained in Chapter 5, reducing `C` makes the street larger and leads to more margin violations. 
+
+                      This increases regularization, creating a simpler model that's less prone to overfitting but may have lower training accuracy.
+            - actionId: finish_step
+        C:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: "Close on the margin violations part, but reducing C makes the street larger, not smaller. Lower C values allow for a wider margin at the cost of more violations."
+            - actionId: replay_action
+              params:
+                actionName: quiz
+        D:
+          do:
+            - actionId: bot_message
+              params:
+                person: lucca
+                messages:
+                  - text: "You're right about the street getting larger, but reducing C leads to more margin violations, not fewer. It's a trade-off between margin width and classification accuracy."
+            - actionId: replay_action
+              params:
+                actionName: quiz

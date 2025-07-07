@@ -1,0 +1,37 @@
+id: introduction_to_machine_learning
+learningObjectives:
+  - Understand the fundamental concept and importance of machine learning.
+hints:
+  - Review Chapter 1 - The Machine Learning Landscape to understand the fundamental concepts and applications of machine learning.
+startFlow:
+  do:
+    # refresh codespace after we added files
+    - actionId: recreate_codespace
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              Welcome to your **Machine Learning Quest!**
+
+              This comprehensive learning journey is based on the renowned book "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow" by Aurélien Géron.
+          - text: "![Book cover](${book.png})"
+          - text:
+              Throughout this quest, you'll dive deep into the world of Machine Learning,
+              where computers are taught to learn from data and make decisions without
+              explicit instructions.
+          - text:
+              Machine Learning is reshaping industries with applications like fraud
+              detection and personalized recommendations.
+          - text:
+              Imagine systems that can adapt and improve, ushering in a new era of smart
+              systems.
+          - text: Exciting, right? Let's explore this fascinating landscape together. :instruction[Ready when you are!]
+    - actionId: ready_message
+      params:
+        person: lucca
+trigger:
+  type: user_ready_response
+  flowNode:
+    do:
+      - actionId: finish_step

@@ -1,0 +1,30 @@
+id: reinforcement_learning_basics
+learningObjectives:
+  - Learn the basics of Reinforcement Learning and its applications.
+hints:
+  - Study Chapter 16 - Reinforcement Learning to understand the fundamental concepts and applications of reinforcement learning.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              From detecting objects to teaching machines to make decisions - welcome to the fascinating world of Reinforcement Learning!
+          - text: |
+              This branch of our ML quest, explored in Chapter 16, is where agents learn through trial and error, much like how we learn new skills.
+
+              Picture a chess master who improves with every game, or a robot learning to navigate by bumping into walls and remembering what works.
+          - text: |
+              RL uses rewards and punishments as teaching signals, creating systems that can discover optimal strategies on their own.
+
+              This is the technology behind game-changing breakthroughs in autonomous vehicles, game AI, and robotics. The future of intelligent decision-making is here!
+          - text: ":instruction[Ready to explore how machines learn to choose wisely? Let's continue this incredible journey!]"
+    - actionId: ready_message
+      params:
+        person: lucca
+trigger:
+  type: user_ready_response
+  flowNode:
+    do:
+      - actionId: finish_step

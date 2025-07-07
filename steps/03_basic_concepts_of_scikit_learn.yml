@@ -1,0 +1,83 @@
+id: basic_concepts_of_scikit_learn
+learningObjectives:
+  - Understand the key concepts and terminologies in Scikit-Learn.
+hints:
+  - Consider exploring the [Scikit-Learn User Guide](https://scikit-learn.org/stable/user_guide.html) for more insights.
+  - Study Chapter 3 - Classification for key concepts and terminologies used in Scikit-Learn and their applications.
+  - Review the MNIST section in Chapter 3 to see how estimators like SGDClassifier are used with the fit() method to learn from data.
+  - Look at the "Training a Binary Classifier" section in Chapter 3 to understand how the predict() method works with trained estimators.
+  - Check the "Performance Measures" section in Chapter 3 to see examples of Scikit-Learn's consistent API in action with various classifiers.
+startFlow:
+  do:
+    - actionId: bot_message
+      params:
+        person: lucca
+        messages:
+          - text: |
+              Scikit-Learn is built around four core concepts that create a unified, consistent API for machine learning.
+
+              **Estimators** are objects that learn from data through a common interface. Every ML algorithm (`LinearRegression`, `RandomForest`, `KMeans`) is an estimator that shares this consistent approach.
+
+              **Predictors** are estimators that can make predictions on new data - like classifiers and regressors that forecast outcomes.
+
+              **Transformers** modify and process data - such as `StandardScaler` for normalization or `PCA` for dimensionality reduction.
+
+              **Pipelines** chain these components together, ensuring consistent preprocessing from training to prediction.
+          - text: |
+              This consistent API lets you swap algorithms easily and build robust ML workflows with clean, readable code. 
+
+              In Chapter 3, we saw these concepts in action with the MNIST classification examples.
+
+              :instruction[Can you name the three main methods that make up Scikit-Learn's consistent API?]
+trigger:
+  type: user_message
+  params:
+    person: lucca
+  flowNode:
+    do:
+      - actionId: parse_user_response
+        name: user_answer
+        params:
+          prompt: |
+            Please evaluate the user's answer in relation to the expected answer: I expect the user to name the three main methods of Scikit-Learn's consistent API: fit(), predict(), and transform().
+
+            # Assessment Criteria
+            - Check if they mention the three core methods: fit, predict, and transform
+            - Consider synonyms, paraphrasing, and different phrasing that convey the same meaning
+            - Be flexible and focus on the essence of the answer rather than exact wording
+            - They should identify at least 2 of the 3 methods to show understanding
+
+            # Response Guidelines:
+            - If the user's answer is correct or shows sufficient understanding, return 'correct: true'
+              - Provide a positive and affirming message, congratulating them and reinforcing their understanding
+            - If the user's answer is incorrect or incomplete, return 'correct: false'
+              - Gently explain why the answer is not fully correct or what may be missing
+              - Encourage them to try again, being empathetic and supportive
+
+            # Tone and Style:
+            - Use friendly and encouraging language
+            - Be empathetic to the user's learning process
+            - Focus on helping the user learn and understand the material
+          schema:
+            correct: boolean
+            reply: string
+    if:
+      conditions:
+        - conditionId: is_truthy
+          params:
+            value: ${outputs.user_answer.value.correct}
+      then:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_answer.value.reply}
+          - actionId: finish_step
+      else:
+        do:
+          - actionId: bot_message
+            params:
+              person: lucca
+              messages:
+                - text: ${outputs.user_answer.value.reply}
